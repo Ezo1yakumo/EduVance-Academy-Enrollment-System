@@ -1,6 +1,6 @@
 ﻿namespace Login_UI
 {
-    partial class Form1
+    partial class LoginForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.Labellogin = new System.Windows.Forms.Label();
             this.txtusername = new System.Windows.Forms.TextBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtpassword = new System.Windows.Forms.TextBox();
@@ -60,16 +60,16 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Academy";
             // 
-            // label3
+            // Labellogin
             // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Montserrat", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.label3.Location = new System.Drawing.Point(72, 141);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 45);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "Log in";
+            this.Labellogin.AutoSize = true;
+            this.Labellogin.Font = new System.Drawing.Font("Montserrat", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Labellogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Labellogin.Location = new System.Drawing.Point(72, 141);
+            this.Labellogin.Name = "Labellogin";
+            this.Labellogin.Size = new System.Drawing.Size(111, 45);
+            this.Labellogin.TabIndex = 2;
+            this.Labellogin.Text = "Log in";
             // 
             // txtusername
             // 
@@ -118,7 +118,7 @@
             this.label4.TabIndex = 7;
             this.label4.Text = "“Every lesson you learn today opens a door for tomorrow.”";
             // 
-            // Form1
+            // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,10 +128,10 @@
             this.Controls.Add(this.txtpassword);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.txtusername);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.Labellogin);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "Form1";
+            this.Name = "LoginForm";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -144,7 +144,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label Labellogin;
         private System.Windows.Forms.TextBox txtusername;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txtpassword;
