@@ -17,14 +17,5 @@ namespace Login_UI
             InitializeComponent();
         }
 
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }

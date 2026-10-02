@@ -107,7 +107,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = ">";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+          
             // 
             // dataGridView1
             // 
@@ -203,7 +203,7 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add  / Edit Section";
-            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
+
             // 
             // button2
             // 
