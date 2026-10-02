@@ -1,22 +1,28 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace Login_UI
 {
-    public partial class Form1 : Form
+
+    public partial class LoginForm : Form
     {
         private const string ConnectionString =
     @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=dblogin;Integrated Security=True";
 
-        public Form1()
+        public LoginForm()
         {
             InitializeComponent();
 
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
+        }
+        public LoginForm(string loginType) : this()
+        {
+            Labellogin.Text = loginType == "Admin"
+                ? "Log in (Admin)"
+                : "Log in";
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -61,7 +67,13 @@ namespace Login_UI
 
         private void btnlogin_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Login button clicked");
+            using (StudentModuleUI studentForm = new StudentModuleUI())
+            {
+                this.Hide();
+                studentForm.ShowDialog();
+                this.Show();
+            }
         }
     }
 }
+

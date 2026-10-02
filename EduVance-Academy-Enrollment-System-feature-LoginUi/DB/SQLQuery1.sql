@@ -17,25 +17,25 @@ END;
 GO
 
 -- Administrator test account
-IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Username = 'admin_test')
+IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Username = 'admin')
 BEGIN
     INSERT INTO dbo.Users
         (Username, PasswordSalt, PasswordHash, Role, IsActive)
     VALUES
-        ('admin_test',
+        ('admin',
          0xCA51F7FB24CD45113EE39A5688A9611E,
          0xF307226969EE04AC6014BD7409B8468ED56E755A1BD6C7D7543D96CBFEA5476D,
-         'Administrator',
+         'admin',
          1);
 END;
 
 -- Cashier test account
-IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Username = 'cashier_test')
+IF NOT EXISTS (SELECT 1 FROM dbo.Users WHERE Username = 'cashier')
 BEGIN
     INSERT INTO dbo.Users
         (Username, PasswordSalt, PasswordHash, Role, IsActive)
     VALUES
-        ('cashier_test',
+        ('cashier',
          0x355893B77F37BC1A8E43CF69B3F27E92,
          0x9329FAB95876E2BBDD31524D272164C20F6B8C69631898738D267E767950AD00,
          'Cashier',
