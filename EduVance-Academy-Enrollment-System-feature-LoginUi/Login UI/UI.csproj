@@ -72,6 +72,9 @@
     <Compile Include="StudentModuleUI.Designer.cs">
       <DependentUpon>StudentModuleUI.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Dashboard.resx">
+      <DependentUpon>Dashboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DataBase Module UI.resx">
       <DependentUpon>DataBase Module UI.cs</DependentUpon>
     </EmbeddedResource>
