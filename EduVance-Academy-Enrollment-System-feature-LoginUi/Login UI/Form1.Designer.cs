@@ -39,7 +39,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.chkAdmin = new System.Windows.Forms.CheckBox();
             this.chkRegistrar = new System.Windows.Forms.CheckBox();
-            this.chkStudent = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -124,7 +123,7 @@
             // chkAdmin
             // 
             this.chkAdmin.AutoSize = true;
-            this.chkAdmin.Location = new System.Drawing.Point(79, 308);
+            this.chkAdmin.Location = new System.Drawing.Point(102, 308);
             this.chkAdmin.Name = "chkAdmin";
             this.chkAdmin.Size = new System.Drawing.Size(54, 17);
             this.chkAdmin.TabIndex = 8;
@@ -134,29 +133,18 @@
             // chkRegistrar
             // 
             this.chkRegistrar.AutoSize = true;
-            this.chkRegistrar.Location = new System.Drawing.Point(139, 308);
+            this.chkRegistrar.Location = new System.Drawing.Point(162, 308);
             this.chkRegistrar.Name = "chkRegistrar";
             this.chkRegistrar.Size = new System.Drawing.Size(88, 17);
             this.chkRegistrar.TabIndex = 9;
             this.chkRegistrar.Text = "registrar/staff";
             this.chkRegistrar.UseVisualStyleBackColor = true;
             // 
-            // chkStudent
-            // 
-            this.chkStudent.AutoSize = true;
-            this.chkStudent.Location = new System.Drawing.Point(233, 308);
-            this.chkStudent.Name = "chkStudent";
-            this.chkStudent.Size = new System.Drawing.Size(61, 17);
-            this.chkStudent.TabIndex = 10;
-            this.chkStudent.Text = "student";
-            this.chkStudent.UseVisualStyleBackColor = true;
-            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.chkStudent);
             this.Controls.Add(this.chkRegistrar);
             this.Controls.Add(this.chkAdmin);
             this.Controls.Add(this.label4);
@@ -188,7 +176,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox chkAdmin;
         private System.Windows.Forms.CheckBox chkRegistrar;
-        private System.Windows.Forms.CheckBox chkStudent;
     }
 }
 
