@@ -54,8 +54,8 @@
             this.label18 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.dgvEnrollmentOverview = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEnrollmentOverview)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -373,21 +373,21 @@
             this.label20.TabIndex = 26;
             this.label20.Text = "Enrollment Overview";
             // 
-            // dataGridView1
+            // dgvEnrollmentOverview
             // 
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(173, 254);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(567, 150);
-            this.dataGridView1.TabIndex = 27;
+            this.dgvEnrollmentOverview.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvEnrollmentOverview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEnrollmentOverview.Location = new System.Drawing.Point(173, 254);
+            this.dgvEnrollmentOverview.Name = "dgvEnrollmentOverview";
+            this.dgvEnrollmentOverview.Size = new System.Drawing.Size(567, 150);
+            this.dgvEnrollmentOverview.TabIndex = 27;
             // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvEnrollmentOverview);
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label17);
@@ -416,7 +416,7 @@
             this.Controls.Add(this.label11);
             this.Name = "Dashboard";
             this.Text = "Dashboard";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvEnrollmentOverview)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -450,6 +450,6 @@
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvEnrollmentOverview;
     }
 }
