@@ -1,4 +1,4 @@
-﻿namespace Login_UI
+﻿namespace BusinessLogic.Repository
 {
     partial class Dashboard
     {
