@@ -30,15 +30,17 @@
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.dgvStudents = new System.Windows.Forms.DataGridView();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnAddNewStudent = new System.Windows.Forms.Button();
+            this.btnClearFilter = new System.Windows.Forms.Button();
             this.txtSearchId = new System.Windows.Forms.TextBox();
             this.txtSearchName = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.txtaddress = new System.Windows.Forms.TextBox();
+            this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnSave = new System.Windows.Forms.Button();
             this.txtEmailAddress = new System.Windows.Forms.TextBox();
             this.txtContactNumber = new System.Windows.Forms.TextBox();
             this.cmbGender = new System.Windows.Forms.ComboBox();
@@ -50,10 +52,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.dtpDateOfBirth = new System.Windows.Forms.DateTimePicker();
-            this.txtaddress = new System.Windows.Forms.TextBox();
+            this.btnNoDelete = new System.Windows.Forms.Button();
+            this.btnYesDelete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -63,8 +63,8 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.dgvStudents);
-            this.groupBox1.Controls.Add(this.button2);
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btnAddNewStudent);
+            this.groupBox1.Controls.Add(this.btnClearFilter);
             this.groupBox1.Controls.Add(this.txtSearchId);
             this.groupBox1.Controls.Add(this.txtSearchName);
             this.groupBox1.Controls.Add(this.label2);
@@ -85,25 +85,25 @@
             this.dgvStudents.Size = new System.Drawing.Size(419, 150);
             this.dgvStudents.TabIndex = 6;
             // 
-            // button2
+            // btnAddNewStudent
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(339, 45);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(106, 23);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "Add New Student";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnAddNewStudent.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAddNewStudent.Location = new System.Drawing.Point(339, 45);
+            this.btnAddNewStudent.Name = "btnAddNewStudent";
+            this.btnAddNewStudent.Size = new System.Drawing.Size(106, 23);
+            this.btnAddNewStudent.TabIndex = 5;
+            this.btnAddNewStudent.Text = "Add New Student";
+            this.btnAddNewStudent.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnClearFilter
             // 
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(258, 45);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Clear Filter";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnClearFilter.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClearFilter.Location = new System.Drawing.Point(258, 45);
+            this.btnClearFilter.Name = "btnClearFilter";
+            this.btnClearFilter.Size = new System.Drawing.Size(75, 23);
+            this.btnClearFilter.TabIndex = 4;
+            this.btnClearFilter.Text = "Clear Filter";
+            this.btnClearFilter.UseVisualStyleBackColor = true;
             // 
             // txtSearchId
             // 
@@ -143,8 +143,8 @@
             // 
             this.groupBox2.Controls.Add(this.txtaddress);
             this.groupBox2.Controls.Add(this.dtpDateOfBirth);
-            this.groupBox2.Controls.Add(this.button4);
-            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.btnCancel);
+            this.groupBox2.Controls.Add(this.btnSave);
             this.groupBox2.Controls.Add(this.txtEmailAddress);
             this.groupBox2.Controls.Add(this.txtContactNumber);
             this.groupBox2.Controls.Add(this.cmbGender);
@@ -162,23 +162,38 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add/Edit Student";
             // 
-            // button4
+            // txtaddress
             // 
-            this.button4.Location = new System.Drawing.Point(200, 356);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 14;
-            this.button4.Text = "Cancel";
-            this.button4.UseVisualStyleBackColor = true;
+            this.txtaddress.Location = new System.Drawing.Point(110, 147);
+            this.txtaddress.Multiline = true;
+            this.txtaddress.Name = "txtaddress";
+            this.txtaddress.Size = new System.Drawing.Size(189, 80);
+            this.txtaddress.TabIndex = 16;
             // 
-            // button3
+            // dtpDateOfBirth
             // 
-            this.button3.Location = new System.Drawing.Point(75, 356);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 13;
-            this.button3.Text = "Save";
-            this.button3.UseVisualStyleBackColor = true;
+            this.dtpDateOfBirth.Location = new System.Drawing.Point(110, 106);
+            this.dtpDateOfBirth.Name = "dtpDateOfBirth";
+            this.dtpDateOfBirth.Size = new System.Drawing.Size(189, 20);
+            this.dtpDateOfBirth.TabIndex = 15;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(200, 356);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(75, 23);
+            this.btnCancel.TabIndex = 14;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(75, 356);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
+            this.btnSave.TabIndex = 13;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
             // 
             // txtEmailAddress
             // 
@@ -265,8 +280,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button6);
-            this.groupBox3.Controls.Add(this.button5);
+            this.groupBox3.Controls.Add(this.btnNoDelete);
+            this.groupBox3.Controls.Add(this.btnYesDelete);
             this.groupBox3.Location = new System.Drawing.Point(12, 278);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(451, 160);
@@ -274,38 +289,23 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Delete Confirmation";
             // 
-            // button6
+            // btnNoDelete
             // 
-            this.button6.Location = new System.Drawing.Point(227, 64);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 1;
-            this.button6.Text = "No, Cancel";
-            this.button6.UseVisualStyleBackColor = true;
+            this.btnNoDelete.Location = new System.Drawing.Point(227, 64);
+            this.btnNoDelete.Name = "btnNoDelete";
+            this.btnNoDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnNoDelete.TabIndex = 1;
+            this.btnNoDelete.Text = "No, Cancel";
+            this.btnNoDelete.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // btnYesDelete
             // 
-            this.button5.Location = new System.Drawing.Point(115, 64);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 0;
-            this.button5.Text = "Yes, Delete";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // dtpDateOfBirth
-            // 
-            this.dtpDateOfBirth.Location = new System.Drawing.Point(110, 106);
-            this.dtpDateOfBirth.Name = "dtpDateOfBirth";
-            this.dtpDateOfBirth.Size = new System.Drawing.Size(189, 20);
-            this.dtpDateOfBirth.TabIndex = 15;
-            // 
-            // txtaddress
-            // 
-            this.txtaddress.Location = new System.Drawing.Point(110, 147);
-            this.txtaddress.Multiline = true;
-            this.txtaddress.Name = "txtaddress";
-            this.txtaddress.Size = new System.Drawing.Size(189, 80);
-            this.txtaddress.TabIndex = 16;
+            this.btnYesDelete.Location = new System.Drawing.Point(115, 64);
+            this.btnYesDelete.Name = "btnYesDelete";
+            this.btnYesDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnYesDelete.TabIndex = 0;
+            this.btnYesDelete.Text = "Yes, Delete";
+            this.btnYesDelete.UseVisualStyleBackColor = true;
             // 
             // StudentModuleUI
             // 
@@ -330,8 +330,8 @@
         #endregion
 
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnAddNewStudent;
+        private System.Windows.Forms.Button btnClearFilter;
         private System.Windows.Forms.TextBox txtSearchId;
         private System.Windows.Forms.TextBox txtSearchName;
         private System.Windows.Forms.Label label2;
@@ -345,14 +345,14 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbGender;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox txtEmailAddress;
         private System.Windows.Forms.TextBox txtContactNumber;
         private System.Windows.Forms.DataGridView dgvStudents;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button btnNoDelete;
+        private System.Windows.Forms.Button btnYesDelete;
         private System.Windows.Forms.DateTimePicker dtpDateOfBirth;
         private System.Windows.Forms.TextBox txtaddress;
     }

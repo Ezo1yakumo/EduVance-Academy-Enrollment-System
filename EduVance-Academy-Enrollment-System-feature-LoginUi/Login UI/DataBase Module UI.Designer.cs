@@ -32,34 +32,34 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvSections = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.button5 = new System.Windows.Forms.Button();
+            this.btnAddNewSection = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.btnClearSection = new System.Windows.Forms.Button();
+            this.btnSaveSection = new System.Windows.Forms.Button();
+            this.txtSectionName = new System.Windows.Forms.TextBox();
+            this.cmbGradeLevel = new System.Windows.Forms.ComboBox();
+            this.cmbSchoolYear = new System.Windows.Forms.ComboBox();
+            this.txtLastName = new System.Windows.Forms.TextBox();
+            this.txtFirstName = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.Section = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
+            this.btnNoDeactivate = new System.Windows.Forms.Button();
+            this.btnYesDeactivate = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSections)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.SuspendLayout();
@@ -77,8 +77,8 @@
             // 
             this.groupBox1.Controls.Add(this.button7);
             this.groupBox1.Controls.Add(this.button6);
-            this.groupBox1.Controls.Add(this.dataGridView1);
-            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.dgvSections);
+            this.groupBox1.Controls.Add(this.btnAddNewSection);
             this.groupBox1.Controls.Add(this.comboBox2);
             this.groupBox1.Controls.Add(this.comboBox1);
             this.groupBox1.Controls.Add(this.label2);
@@ -107,20 +107,19 @@
             this.button6.TabIndex = 6;
             this.button6.Text = ">";
             this.button6.UseVisualStyleBackColor = true;
-          
             // 
-            // dataGridView1
+            // dgvSections
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dgvSections.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvSections.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2,
             this.Column3,
             this.Column4});
-            this.dataGridView1.Location = new System.Drawing.Point(7, 80);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(444, 150);
-            this.dataGridView1.TabIndex = 5;
+            this.dgvSections.Location = new System.Drawing.Point(7, 80);
+            this.dgvSections.Name = "dgvSections";
+            this.dgvSections.Size = new System.Drawing.Size(444, 150);
+            this.dgvSections.TabIndex = 5;
             // 
             // Column1
             // 
@@ -142,14 +141,14 @@
             this.Column4.HeaderText = "Year level";
             this.Column4.Name = "Column4";
             // 
-            // button5
+            // btnAddNewSection
             // 
-            this.button5.Location = new System.Drawing.Point(395, 28);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 4;
-            this.button5.Text = "AddNew record";
-            this.button5.UseVisualStyleBackColor = true;
+            this.btnAddNewSection.Location = new System.Drawing.Point(395, 28);
+            this.btnAddNewSection.Name = "btnAddNewSection";
+            this.btnAddNewSection.Size = new System.Drawing.Size(75, 23);
+            this.btnAddNewSection.TabIndex = 4;
+            this.btnAddNewSection.Text = "AddNew record";
+            this.btnAddNewSection.UseVisualStyleBackColor = true;
             // 
             // comboBox2
             // 
@@ -185,13 +184,13 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.textBox4);
-            this.groupBox2.Controls.Add(this.comboBox4);
-            this.groupBox2.Controls.Add(this.comboBox3);
-            this.groupBox2.Controls.Add(this.textBox3);
-            this.groupBox2.Controls.Add(this.textBox2);
+            this.groupBox2.Controls.Add(this.btnClearSection);
+            this.groupBox2.Controls.Add(this.btnSaveSection);
+            this.groupBox2.Controls.Add(this.txtSectionName);
+            this.groupBox2.Controls.Add(this.cmbGradeLevel);
+            this.groupBox2.Controls.Add(this.cmbSchoolYear);
+            this.groupBox2.Controls.Add(this.txtLastName);
+            this.groupBox2.Controls.Add(this.txtFirstName);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.label5);
@@ -203,62 +202,62 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Add  / Edit Section";
-
             // 
-            // button2
+            // btnClearSection
             // 
-            this.button2.Location = new System.Drawing.Point(130, 336);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 11;
-            this.button2.Text = "Clear";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnClearSection.Location = new System.Drawing.Point(130, 336);
+            this.btnClearSection.Name = "btnClearSection";
+            this.btnClearSection.Size = new System.Drawing.Size(75, 23);
+            this.btnClearSection.TabIndex = 11;
+            this.btnClearSection.Text = "Clear";
+            this.btnClearSection.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnSaveSection
             // 
-            this.button1.Location = new System.Drawing.Point(28, 336);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 10;
-            this.button1.Text = "Save";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btnSaveSection.Location = new System.Drawing.Point(28, 336);
+            this.btnSaveSection.Name = "btnSaveSection";
+            this.btnSaveSection.Size = new System.Drawing.Size(75, 23);
+            this.btnSaveSection.TabIndex = 10;
+            this.btnSaveSection.Text = "Save";
+            this.btnSaveSection.UseVisualStyleBackColor = true;
+            this.btnSaveSection.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox4
+            // txtSectionName
             // 
-            this.textBox4.Location = new System.Drawing.Point(94, 148);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 20);
-            this.textBox4.TabIndex = 9;
+            this.txtSectionName.Location = new System.Drawing.Point(94, 148);
+            this.txtSectionName.Name = "txtSectionName";
+            this.txtSectionName.Size = new System.Drawing.Size(100, 20);
+            this.txtSectionName.TabIndex = 9;
             // 
-            // comboBox4
+            // cmbGradeLevel
             // 
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(94, 116);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(121, 21);
-            this.comboBox4.TabIndex = 8;
+            this.cmbGradeLevel.FormattingEnabled = true;
+            this.cmbGradeLevel.Location = new System.Drawing.Point(94, 116);
+            this.cmbGradeLevel.Name = "cmbGradeLevel";
+            this.cmbGradeLevel.Size = new System.Drawing.Size(121, 21);
+            this.cmbGradeLevel.TabIndex = 8;
             // 
-            // comboBox3
+            // cmbSchoolYear
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(94, 89);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 7;
+            this.cmbSchoolYear.FormattingEnabled = true;
+            this.cmbSchoolYear.Location = new System.Drawing.Point(94, 89);
+            this.cmbSchoolYear.Name = "cmbSchoolYear";
+            this.cmbSchoolYear.Size = new System.Drawing.Size(121, 21);
+            this.cmbSchoolYear.TabIndex = 7;
             // 
-            // textBox3
+            // txtLastName
             // 
-            this.textBox3.Location = new System.Drawing.Point(94, 58);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 20);
-            this.textBox3.TabIndex = 6;
+            this.txtLastName.Location = new System.Drawing.Point(94, 58);
+            this.txtLastName.Name = "txtLastName";
+            this.txtLastName.Size = new System.Drawing.Size(100, 20);
+            this.txtLastName.TabIndex = 6;
             // 
-            // textBox2
+            // txtFirstName
             // 
-            this.textBox2.Location = new System.Drawing.Point(94, 32);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 20);
-            this.textBox2.TabIndex = 5;
+            this.txtFirstName.Location = new System.Drawing.Point(94, 32);
+            this.txtFirstName.Name = "txtFirstName";
+            this.txtFirstName.Size = new System.Drawing.Size(100, 20);
+            this.txtFirstName.TabIndex = 5;
             // 
             // label7
             // 
@@ -307,8 +306,8 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button4);
-            this.groupBox3.Controls.Add(this.button3);
+            this.groupBox3.Controls.Add(this.btnNoDeactivate);
+            this.groupBox3.Controls.Add(this.btnYesDeactivate);
             this.groupBox3.Location = new System.Drawing.Point(60, 321);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(268, 129);
@@ -316,24 +315,23 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Delate / Deactive Confirmation";
             // 
-            // button4
+            // btnNoDeactivate
             // 
-            this.button4.Location = new System.Drawing.Point(187, 98);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
-            this.button4.TabIndex = 1;
-            this.button4.Text = "No";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btnNoDeactivate.Location = new System.Drawing.Point(187, 98);
+            this.btnNoDeactivate.Name = "btnNoDeactivate";
+            this.btnNoDeactivate.Size = new System.Drawing.Size(75, 23);
+            this.btnNoDeactivate.TabIndex = 1;
+            this.btnNoDeactivate.Text = "No";
+            this.btnNoDeactivate.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // btnYesDeactivate
             // 
-            this.button3.Location = new System.Drawing.Point(105, 99);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 0;
-            this.button3.Text = "Yes";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
+            this.btnYesDeactivate.Location = new System.Drawing.Point(105, 99);
+            this.btnYesDeactivate.Name = "btnYesDeactivate";
+            this.btnYesDeactivate.Size = new System.Drawing.Size(75, 23);
+            this.btnYesDeactivate.TabIndex = 0;
+            this.btnYesDeactivate.Text = "Yes";
+            this.btnYesDeactivate.UseVisualStyleBackColor = true;
             // DataBase_Module_UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -347,7 +345,7 @@
             this.Text = "DataBase_Module_UI";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvSections)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
@@ -365,23 +363,23 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button btnClearSection;
+        private System.Windows.Forms.Button btnSaveSection;
+        private System.Windows.Forms.TextBox txtSectionName;
+        private System.Windows.Forms.ComboBox cmbGradeLevel;
+        private System.Windows.Forms.ComboBox cmbSchoolYear;
+        private System.Windows.Forms.TextBox txtLastName;
+        private System.Windows.Forms.TextBox txtFirstName;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label Section;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.DataGridView dgvSections;
+        private System.Windows.Forms.Button btnAddNewSection;
+        private System.Windows.Forms.Button btnNoDeactivate;
+        private System.Windows.Forms.Button btnYesDeactivate;
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;

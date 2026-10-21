@@ -1,88 +1,176 @@
-﻿using Microsoft.Data.SqlClient;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
-namespace BusinessLogic.Repository
+namespace Login_UI
 {
-    public class EnrollmentMonth
+    public partial class Dashboard : Form
     {
-        public int MonthNumber { get; set; }
-        public int EnrollmentCount { get; set; }
-    }
+        private Timer refreshTimer = new Timer();
 
-    public class DashboardSummary
-    {
-        public int TotalStudents { get; set; }
-        public int TotalEnrollments { get; set; }
-        public int ActiveSections { get; set; }
-        public List<EnrollmentMonth> MonthlyEnrollments { get; set; }
-            = new List<EnrollmentMonth>();
-    }
-
-    public class DashboardRepository
-    {
-        private readonly string _connectionString =
-            ConfigurationManager.ConnectionStrings["EduVanceDb"].ConnectionString;
-
-        public DashboardSummary GetSummary(string schoolYear)
+        public Dashboard()
         {
-            var result = new DashboardSummary();
+            InitializeComponent();
 
-            using (var connection = new SqlConnection(_connectionString))
+            // Refresh dashboard every 5 seconds
+            refreshTimer.Interval = 5000;
+            refreshTimer.Tick += (s, e) => RefreshDashboard();
+
+            this.Shown += (s, e) =>
             {
-                connection.Open();
+                RefreshDashboard();
+                refreshTimer.Start();
+            };
 
-                const string totalsSql = @"
-                    SELECT
-                        (SELECT COUNT(*) FROM dbo.Students) AS TotalStudents,
-                        (SELECT COUNT(*) FROM dbo.Enrollments
-                         WHERE SchoolYear = @SchoolYear) AS TotalEnrollments,
-                        (SELECT COUNT(*) FROM dbo.Sections
-                         WHERE IsActive = 1) AS ActiveSections;";
+            this.FormClosed += (s, e) =>
+            {
+                refreshTimer.Stop();
+                refreshTimer.Dispose();
+            };
 
-                using (var command = new SqlCommand(totalsSql, connection))
+            // DataGridView settings
+            dgvEnrollmentOverview.ReadOnly = true;
+            dgvEnrollmentOverview.AllowUserToAddRows = false;
+            dgvEnrollmentOverview.AllowUserToDeleteRows = false;
+
+            dgvEnrollmentOverview.AutoSizeColumnsMode =
+                DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvEnrollmentOverview.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
+            dgvEnrollmentOverview.AutoGenerateColumns = true;
+
+            // Remove default Column1
+            dgvEnrollmentOverview.DataSource = null;
+            dgvEnrollmentOverview.Columns.Clear();
+        }
+
+        // REFRESH DASHBOARD INFORMATION
+        private void RefreshDashboard()
+        {
+            try
+            {
+                using (SqlConnection connection =
+                    new SqlConnection(DatabaseConnection.ConnectionString))
                 {
-                    command.Parameters.AddWithValue("@SchoolYear", schoolYear);
+                    connection.Open();
 
-                    using (var reader = command.ExecuteReader())
+                    // DASHBOARD COUNTS
+                    string sql = @"
+                        SELECT
+                            (SELECT COUNT(*)
+                             FROM dbo.Students)
+                                AS TotalStudents,
+
+                            (SELECT COUNT(*)
+                             FROM dbo.Enrollments)
+                                AS TotalEnrollments,
+
+                            (SELECT COUNT(*)
+                             FROM dbo.Sections
+                             WHERE IsActive = 1)
+                                AS ActiveSections";
+
+                    using (SqlCommand command =
+                        new SqlCommand(sql, connection))
                     {
-                        if (reader.Read())
+                        using (SqlDataReader reader =
+                            command.ExecuteReader())
                         {
-                            result.TotalStudents = Convert.ToInt32(reader["TotalStudents"]);
-                            result.TotalEnrollments = Convert.ToInt32(reader["TotalEnrollments"]);
-                            result.ActiveSections = Convert.ToInt32(reader["ActiveSections"]);
+                            if (reader.Read())
+                            {
+                                lblTotalStudentsValue.Text =
+                                    reader["TotalStudents"].ToString();
+
+                                lblTotalEnrollmentsValue.Text =
+                                    reader["TotalEnrollments"].ToString();
+
+                                lblActiveSectionsValue.Text =
+                                    reader["ActiveSections"].ToString();
+                            }
                         }
                     }
-                }
 
-                const string chartSql = @"
-                    SELECT MONTH(EnrollmentDate) AS MonthNumber,
-                           COUNT(*) AS EnrollmentCount
-                    FROM dbo.Enrollments
-                    WHERE SchoolYear = @SchoolYear
-                    GROUP BY MONTH(EnrollmentDate)
-                    ORDER BY MonthNumber;";
+                    // DISPLAY SAVED STUDENTS
+                    string studentSql = @"
+                        SELECT
+                            StudentID AS [Student ID],
+                            FullName AS [Full Name],
+                            Gender,
+                            DateOfBirth AS [Date of Birth],
+                            Address,
+                            ContactNumber AS [Contact Number],
+                            EmailAddress AS [Email Address]
+                        FROM dbo.Students
+                        ORDER BY StudentID DESC";
 
-                using (var command = new SqlCommand(chartSql, connection))
-                {
-                    command.Parameters.AddWithValue("@SchoolYear", schoolYear);
-
-                    using (var reader = command.ExecuteReader())
+                    using (SqlDataAdapter adapter =
+                        new SqlDataAdapter(studentSql, connection))
                     {
-                        while (reader.Read())
-                        {
-                            result.MonthlyEnrollments.Add(new EnrollmentMonth
-                            {
-                                MonthNumber = Convert.ToInt32(reader["MonthNumber"]),
-                                EnrollmentCount = Convert.ToInt32(reader["EnrollmentCount"])
-                            });
-                        }
+                        DataTable table = new DataTable();
+
+                        adapter.Fill(table);
+
+                        // Display saved information
+                        dgvEnrollmentOverview.DataSource = table;
+
+                        dgvEnrollmentOverview.ClearSelection();
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                refreshTimer.Stop();
 
-            return result;
+                MessageBox.Show(
+                    "Dashboard database error:\n" + ex.Message);
+            }
+        }
+
+        // STUDENTS BUTTON
+        private void button2_Click(object sender, EventArgs e)
+        {
+            using (StudentModuleUI student = new StudentModuleUI())
+            {
+                student.ShowDialog();
+            }
+
+            // Refresh dashboard after Student Module closes
+            RefreshDashboard();
+        }
+
+        // ENROLLMENT BUTTON
+        private void button3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // ASSESSMENT BUTTON
+        private void button4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // PAYMENTS BUTTON
+        private void button5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // REPORTS BUTTON
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        // DATAGRIDVIEW EVENT
+        private void dgvEnrollmentOverview_CellContentClick(
+            object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

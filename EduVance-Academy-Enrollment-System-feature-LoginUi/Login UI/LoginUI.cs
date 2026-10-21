@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace Login_UI
@@ -8,8 +10,8 @@ namespace Login_UI
         public LoginForm()
         {
             InitializeComponent();
+            txtpassword.UseSystemPasswordChar = true;
 
-            // Avoid attaching the same handler more than once.
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
         }
@@ -24,8 +26,7 @@ namespace Login_UI
             string username = txtusername.Text.Trim();
             string password = txtpassword.Text;
 
-            if (string.IsNullOrWhiteSpace(username) ||
-                string.IsNullOrWhiteSpace(password))
+            if (username == "" || password == "")
             {
                 MessageBox.Show("Enter both username and password.");
                 return;
@@ -34,31 +35,43 @@ namespace Login_UI
             bool isAdmin = chkAdmin.Checked;
             bool isRegistrar = chkRegistrar.Checked;
 
-            // Exactly one role must be selected.
-            if ((isAdmin ? 1 : 0) + (isRegistrar ? 1 : 0) != 1)
+            if (isAdmin == isRegistrar)
             {
-                MessageBox.Show("Select one role.");
+                MessageBox.Show("Select only one role.");
                 return;
             }
 
-            bool validLogin =
-                (isAdmin && username == "admin" && password == "admin") ||
-                (isRegistrar && username == "cashier" && password == "cashier");
+            string role = isAdmin ? "Admin" : "Registrar";
 
-            if (!validLogin)
+            try
             {
-                MessageBox.Show("Invalid username or password.");
-                return;
+                UserRepository repository = new UserRepository();
+
+                bool validLogin = repository.ValidateCredentials(
+                    username, password, role);
+
+                if (!validLogin)
+                {
+                    MessageBox.Show("Invalid username, password, or role.");
+                    return;
+                }
+
+                MessageBox.Show("Login successful!");
+
+                Hide();
+
+                using (Dashboard dashboard = new Dashboard())
+                {
+                    dashboard.ShowDialog();
+                }
+
+                Close();
             }
-
-            Hide();
-
-            using (var studentForm = new StudentModuleUI())
+            catch (SqlException ex)
             {
-                studentForm.ShowDialog();
+                Show();
+                MessageBox.Show("Database error:\n" + ex.Message);
             }
-
-            Close();
         }
     }
 }

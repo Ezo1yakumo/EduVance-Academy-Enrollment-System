@@ -1,4 +1,4 @@
-﻿namespace BusinessLogic.Repository
+﻿namespace Login_UI
 {
     partial class Dashboard
     {
@@ -42,19 +42,20 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.lblTotalStudentsValue = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
+            this.lblTotalEnrollmentsValue = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
+            this.lblActiveSectionsValue = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.label20 = new System.Windows.Forms.Label();
             this.dgvEnrollmentOverview = new System.Windows.Forms.DataGridView();
+            this.Enrolled = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvEnrollmentOverview)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,6 +98,7 @@
             this.button2.TabIndex = 2;
             this.button2.Text = "Students";
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
@@ -112,6 +114,7 @@
             this.button3.TabIndex = 3;
             this.button3.Text = "Enrollment";
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -127,6 +130,7 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Assessment";
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 
@@ -142,6 +146,7 @@
             this.button5.TabIndex = 5;
             this.button5.Text = "Payments";
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -157,6 +162,7 @@
             this.button6.TabIndex = 6;
             this.button6.Text = "Reports";
             this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // label2
             // 
@@ -238,17 +244,17 @@
             this.label8.TabIndex = 13;
             this.label8.Text = "           ";
             // 
-            // label9
+            // lblTotalStudentsValue
             // 
-            this.label9.AutoSize = true;
-            this.label9.BackColor = System.Drawing.Color.Gainsboro;
-            this.label9.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.ForeColor = System.Drawing.Color.Black;
-            this.label9.Location = new System.Drawing.Point(179, 135);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(23, 33);
-            this.label9.TabIndex = 14;
-            this.label9.Text = "-";
+            this.lblTotalStudentsValue.AutoSize = true;
+            this.lblTotalStudentsValue.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblTotalStudentsValue.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalStudentsValue.ForeColor = System.Drawing.Color.Black;
+            this.lblTotalStudentsValue.Location = new System.Drawing.Point(179, 135);
+            this.lblTotalStudentsValue.Name = "lblTotalStudentsValue";
+            this.lblTotalStudentsValue.Size = new System.Drawing.Size(23, 33);
+            this.lblTotalStudentsValue.TabIndex = 14;
+            this.lblTotalStudentsValue.Text = "-";
             // 
             // label10
             // 
@@ -286,17 +292,17 @@
             this.label13.TabIndex = 19;
             this.label13.Text = "Selected school year";
             // 
-            // label14
+            // lblTotalEnrollmentsValue
             // 
-            this.label14.AutoSize = true;
-            this.label14.BackColor = System.Drawing.Color.Gainsboro;
-            this.label14.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(395, 137);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(23, 33);
-            this.label14.TabIndex = 18;
-            this.label14.Text = "-";
+            this.lblTotalEnrollmentsValue.AutoSize = true;
+            this.lblTotalEnrollmentsValue.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblTotalEnrollmentsValue.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTotalEnrollmentsValue.ForeColor = System.Drawing.Color.Black;
+            this.lblTotalEnrollmentsValue.Location = new System.Drawing.Point(395, 137);
+            this.lblTotalEnrollmentsValue.Name = "lblTotalEnrollmentsValue";
+            this.lblTotalEnrollmentsValue.Size = new System.Drawing.Size(23, 33);
+            this.lblTotalEnrollmentsValue.TabIndex = 18;
+            this.lblTotalEnrollmentsValue.Text = "-";
             // 
             // label11
             // 
@@ -340,17 +346,17 @@
             this.label17.TabIndex = 24;
             this.label17.Text = "Currently available";
             // 
-            // label18
+            // lblActiveSectionsValue
             // 
-            this.label18.AutoSize = true;
-            this.label18.BackColor = System.Drawing.Color.Gainsboro;
-            this.label18.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.ForeColor = System.Drawing.Color.Black;
-            this.label18.Location = new System.Drawing.Point(581, 137);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(23, 33);
-            this.label18.TabIndex = 23;
-            this.label18.Text = "-";
+            this.lblActiveSectionsValue.AutoSize = true;
+            this.lblActiveSectionsValue.BackColor = System.Drawing.Color.Gainsboro;
+            this.lblActiveSectionsValue.Font = new System.Drawing.Font("Montserrat SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblActiveSectionsValue.ForeColor = System.Drawing.Color.Black;
+            this.lblActiveSectionsValue.Location = new System.Drawing.Point(581, 137);
+            this.lblActiveSectionsValue.Name = "lblActiveSectionsValue";
+            this.lblActiveSectionsValue.Size = new System.Drawing.Size(23, 33);
+            this.lblActiveSectionsValue.TabIndex = 23;
+            this.lblActiveSectionsValue.Text = "-";
             // 
             // label19
             // 
@@ -377,10 +383,18 @@
             // 
             this.dgvEnrollmentOverview.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dgvEnrollmentOverview.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvEnrollmentOverview.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Enrolled});
             this.dgvEnrollmentOverview.Location = new System.Drawing.Point(173, 254);
             this.dgvEnrollmentOverview.Name = "dgvEnrollmentOverview";
             this.dgvEnrollmentOverview.Size = new System.Drawing.Size(567, 150);
             this.dgvEnrollmentOverview.TabIndex = 27;
+            this.dgvEnrollmentOverview.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvEnrollmentOverview_CellContentClick);
+            // 
+            // Enrolled
+            // 
+            this.Enrolled.HeaderText = "Column1";
+            this.Enrolled.Name = "Enrolled";
             // 
             // Dashboard
             // 
@@ -391,14 +405,14 @@
             this.Controls.Add(this.label20);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.label17);
-            this.Controls.Add(this.label18);
+            this.Controls.Add(this.lblActiveSectionsValue);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label13);
-            this.Controls.Add(this.label14);
+            this.Controls.Add(this.lblTotalEnrollmentsValue);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.label10);
-            this.Controls.Add(this.label9);
+            this.Controls.Add(this.lblTotalStudentsValue);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
@@ -438,18 +452,19 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblTotalStudentsValue;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label lblTotalEnrollmentsValue;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label lblActiveSectionsValue;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.DataGridView dgvEnrollmentOverview;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Enrolled;
     }
 }

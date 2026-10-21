@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -8,59 +9,128 @@ namespace Login_UI
     public partial class StudentModuleUI : Form
     {
         private readonly string connectionString =
-            @"Data Source=(LocalDB)\MSSQLLocalDB;Initial Catalog=EduVanceDB;Integrated Security=True;";
+            DatabaseConnection.ConnectionString;
 
         private int selectedStudentId = 0;
         private int pendingDeleteStudentId = 0;
+
+        private bool loadingStudents = false;
+        private bool changingSearch = false;
 
         public StudentModuleUI()
         {
             InitializeComponent();
 
-            cmbGender.Items.Clear();
-            cmbGender.Items.AddRange(new object[] { "Female", "Male", "Other" });
+            // CONNECT BUTTONS
+            btnSave.Click -= btnSave_Click;
+            btnSave.Click += btnSave_Click;
 
-            dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            btnCancel.Click -= btnCancel_Click;
+            btnCancel.Click += btnCancel_Click;
+
+            btnAddNewStudent.Click -= btnAddNewStudent_Click;
+            btnAddNewStudent.Click += btnAddNewStudent_Click;
+
+            btnClearFilter.Click -= btnClearFilter_Click;
+            btnClearFilter.Click += btnClearFilter_Click;
+
+            btnYesDelete.Click -= btnYesDelete_Click;
+            btnYesDelete.Click += btnYesDelete_Click;
+
+            btnNoDelete.Click -= btnNoDelete_Click;
+            btnNoDelete.Click += btnNoDelete_Click;
+
+            // CONNECT SEARCH BOXES
+            txtSearchName.TextChanged -= txtSearchName_TextChanged;
+            txtSearchName.TextChanged += txtSearchName_TextChanged;
+
+            txtSearchId.TextChanged -= txtSearchId_TextChanged;
+            txtSearchId.TextChanged += txtSearchId_TextChanged;
+
+            // CONNECT STUDENT TABLE
+            dgvStudents.SelectionChanged -= dgvStudents_SelectionChanged;
+            dgvStudents.SelectionChanged += dgvStudents_SelectionChanged;
+
+            dgvStudents.CellClick += dgvStudents_CellClick;
+
+            // GENDER OPTIONS
+            cmbGender.Items.Clear();
+            cmbGender.Items.AddRange(
+                new object[] { "Male", "Female", "Other" });
+
+            // TABLE SETTINGS
+            dgvStudents.AutoGenerateColumns = true;
+            dgvStudents.Columns.Clear();
+
+            dgvStudents.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
+
             dgvStudents.MultiSelect = false;
             dgvStudents.ReadOnly = true;
             dgvStudents.AllowUserToAddRows = false;
+
             dgvStudents.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
 
+            // DISPLAY SAVED STUDENTS
             LoadStudents();
         }
 
-        private void LoadStudents(string nameFilter = "", string idFilter = "")
+        // LOAD STUDENTS FROM DATABASE
+        private void LoadStudents(
+            string nameFilter = "", string idFilter = "")
         {
-            const string sql = @"
-                SELECT StudentID, FullName, Gender, DateOfBirth,
-                       Address, ContactNumber, EmailAddress
+            string sql = @"
+                SELECT StudentID, FullName, Gender,
+                       DateOfBirth, Address,
+                       ContactNumber, EmailAddress
                 FROM dbo.Students
-                WHERE (@Name = '' OR FullName LIKE '%' + @Name + '%')
-                  AND (@ID = '' OR CONVERT(NVARCHAR(20), StudentID) = @ID)
-                ORDER BY StudentID DESC;";
+                WHERE (@Name = ''
+                    OR FullName LIKE '%' + @Name + '%')
+                  AND (@ID = ''
+                    OR CONVERT(NVARCHAR(20), StudentID) = @ID)
+                ORDER BY StudentID DESC";
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                using (SqlDataAdapter adapter = new SqlDataAdapter(sql, connection))
+                loadingStudents = true;
+
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString))
+                using (SqlDataAdapter adapter =
+                    new SqlDataAdapter(sql, connection))
                 {
-                    adapter.SelectCommand.Parameters.Add("@Name", SqlDbType.NVarChar, 150)
+                    adapter.SelectCommand.Parameters.Add(
+                        "@Name", SqlDbType.NVarChar, 150)
                         .Value = nameFilter;
-                    adapter.SelectCommand.Parameters.Add("@ID", SqlDbType.NVarChar, 20)
+
+                    adapter.SelectCommand.Parameters.Add(
+                        "@ID", SqlDbType.NVarChar, 20)
                         .Value = idFilter;
 
                     DataTable table = new DataTable();
                     adapter.Fill(table);
+
                     dgvStudents.DataSource = table;
+                    dgvStudents.ClearSelection();
+                    dgvStudents.CurrentCell = null;
+
+                    selectedStudentId = 0;
+                    pendingDeleteStudentId = 0;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not load student records.\n" + ex.Message);
+                MessageBox.Show(
+                    "Error loading students:\n" + ex.Message);
+            }
+            finally
+            {
+                loadingStudents = false;
             }
         }
 
+        // SAVE OR UPDATE STUDENT
         private void btnSave_Click(object sender, EventArgs e)
         {
             string fullName = txtFullName.Text.Trim();
@@ -69,21 +139,25 @@ namespace Login_UI
             string contact = txtContactNumber.Text.Trim();
             string email = txtEmailAddress.Text.Trim();
 
-            if (fullName == "" || gender == "" || address == "" ||
-                contact == "" || email == "")
+            if (fullName == "" || gender == "" ||
+                address == "" || contact == "" || email == "")
             {
-                MessageBox.Show("Please complete all student fields.");
+                MessageBox.Show("Please complete all fields.");
                 return;
             }
 
+            bool addingNew = selectedStudentId == 0;
             string sql;
-            if (selectedStudentId == 0)
+
+            if (addingNew)
             {
                 sql = @"
                     INSERT INTO dbo.Students
-                        (FullName, Gender, DateOfBirth, Address, ContactNumber, EmailAddress)
+                    (FullName, Gender, DateOfBirth,
+                     Address, ContactNumber, EmailAddress)
                     VALUES
-                        (@FullName, @Gender, @DateOfBirth, @Address, @ContactNumber, @EmailAddress);";
+                    (@FullName, @Gender, @DateOfBirth,
+                     @Address, @ContactNumber, @EmailAddress)";
             }
             else
             {
@@ -95,151 +169,268 @@ namespace Login_UI
                         Address = @Address,
                         ContactNumber = @ContactNumber,
                         EmailAddress = @EmailAddress
-                    WHERE StudentID = @StudentID;";
+                    WHERE StudentID = @StudentID";
             }
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString))
+                using (SqlCommand command =
+                    new SqlCommand(sql, connection))
                 {
-                    command.Parameters.Add("@FullName", SqlDbType.NVarChar, 150).Value = fullName;
-                    command.Parameters.Add("@Gender", SqlDbType.NVarChar, 20).Value = gender;
-                    command.Parameters.Add("@DateOfBirth", SqlDbType.Date).Value =
-                        dtpDateOfBirth.Value.Date;
-                    command.Parameters.Add("@Address", SqlDbType.NVarChar, 300).Value = address;
-                    command.Parameters.Add("@ContactNumber", SqlDbType.NVarChar, 30).Value = contact;
-                    command.Parameters.Add("@EmailAddress", SqlDbType.NVarChar, 150).Value = email;
+                    command.Parameters.Add(
+                        "@FullName", SqlDbType.NVarChar, 150)
+                        .Value = fullName;
 
-                    if (selectedStudentId != 0)
-                        command.Parameters.Add("@StudentID", SqlDbType.Int).Value = selectedStudentId;
+                    command.Parameters.Add(
+                        "@Gender", SqlDbType.NVarChar, 20)
+                        .Value = gender;
+
+                    command.Parameters.Add(
+                        "@DateOfBirth", SqlDbType.Date)
+                        .Value = dtpDateOfBirth.Value.Date;
+
+                    command.Parameters.Add(
+                        "@Address", SqlDbType.NVarChar, 300)
+                        .Value = address;
+
+                    command.Parameters.Add(
+                        "@ContactNumber", SqlDbType.NVarChar, 30)
+                        .Value = contact;
+
+                    command.Parameters.Add(
+                        "@EmailAddress", SqlDbType.NVarChar, 150)
+                        .Value = email;
+
+                    if (!addingNew)
+                    {
+                        command.Parameters.Add(
+                            "@StudentID", SqlDbType.Int)
+                            .Value = selectedStudentId;
+                    }
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+
+                    int affected = command.ExecuteNonQuery();
+
+                    if (affected == 0)
+                    {
+                        MessageBox.Show("No student record was changed.");
+                        return;
+                    }
                 }
 
-                MessageBox.Show(selectedStudentId == 0
-                    ? "Student added."
-                    : "Student updated.");
+                MessageBox.Show(
+                    addingNew
+                    ? "Student saved successfully!"
+                    : "Student updated successfully!");
 
-                ClearForm();
-                LoadStudents(txtSearchName.Text.Trim(), txtSearchId.Text.Trim());
+                ClearStudentFields();
+                ResetFiltersAndReload();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not save the student record.\n" + ex.Message);
+                MessageBox.Show(
+                    "Error saving student:\n" + ex.Message);
             }
         }
 
-        private void dgvStudents_SelectionChanged(object sender, EventArgs e)
+        // SELECT STUDENT FOR EDITING
+        private void dgvStudents_SelectionChanged(
+            object sender, EventArgs e)
         {
-            if (dgvStudents.CurrentRow == null ||
-                dgvStudents.CurrentRow.IsNewRow)
+            if (loadingStudents ||
+                dgvStudents.SelectedRows.Count == 0)
                 return;
 
-            DataGridViewRow row = dgvStudents.CurrentRow;
+            DataGridViewRow row = dgvStudents.SelectedRows[0];
 
-            selectedStudentId = Convert.ToInt32(row.Cells["StudentID"].Value);
-            txtFullName.Text = Convert.ToString(row.Cells["FullName"].Value);
-            cmbGender.Text = Convert.ToString(row.Cells["Gender"].Value);
+            if (row.IsNewRow)
+                return;
+
+            selectedStudentId =
+                Convert.ToInt32(row.Cells["StudentID"].Value);
+
+            pendingDeleteStudentId = selectedStudentId;
+
+            txtFullName.Text =
+                Convert.ToString(row.Cells["FullName"].Value);
+
+            cmbGender.Text =
+                Convert.ToString(row.Cells["Gender"].Value);
+
             dtpDateOfBirth.Value =
                 Convert.ToDateTime(row.Cells["DateOfBirth"].Value);
-            txtaddress.Text = Convert.ToString(row.Cells["Address"].Value);
-            txtContactNumber.Text = Convert.ToString(row.Cells["ContactNumber"].Value);
-            txtEmailAddress.Text = Convert.ToString(row.Cells["EmailAddress"].Value);
+
+            txtaddress.Text =
+                Convert.ToString(row.Cells["Address"].Value);
+
+            txtContactNumber.Text =
+                Convert.ToString(row.Cells["ContactNumber"].Value);
+
+            txtEmailAddress.Text =
+                Convert.ToString(row.Cells["EmailAddress"].Value);
         }
 
-        private void btnAddNewStudent_Click(object sender, EventArgs e)
+        private void dgvStudents_CellClick(
+            object sender, DataGridViewCellEventArgs e)
         {
-            ClearForm();
+            if (e.RowIndex >= 0)
+                dgvStudents_SelectionChanged(sender, EventArgs.Empty);
+        }
+
+        // ADD NEW STUDENT
+        private void btnAddNewStudent_Click(
+            object sender, EventArgs e)
+        {
+            ClearStudentFields();
             txtFullName.Focus();
         }
 
+        // CANCEL EDITING
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            ClearForm();
+            ClearStudentFields();
         }
 
-        private void btnClearFilter_Click(object sender, EventArgs e)
+        // SEARCH BY NAME
+        private void txtSearchName_TextChanged(
+            object sender, EventArgs e)
         {
-            txtSearchName.Clear();
-            txtSearchId.Clear();
-            LoadStudents();
+            if (!changingSearch)
+            {
+                LoadStudents(
+                    txtSearchName.Text.Trim(),
+                    txtSearchId.Text.Trim());
+            }
         }
 
-        private void txtSearchName_TextChanged(object sender, EventArgs e)
+        // SEARCH BY ID
+        private void txtSearchId_TextChanged(
+            object sender, EventArgs e)
         {
-            LoadStudents(txtSearchName.Text.Trim(), txtSearchId.Text.Trim());
+            if (!changingSearch)
+            {
+                LoadStudents(
+                    txtSearchName.Text.Trim(),
+                    txtSearchId.Text.Trim());
+            }
         }
 
-        private void txtSearchId_TextChanged(object sender, EventArgs e)
+        // CLEAR SEARCH FILTERS
+        private void btnClearFilter_Click(
+            object sender, EventArgs e)
         {
-            LoadStudents(txtSearchName.Text.Trim(), txtSearchId.Text.Trim());
+            ResetFiltersAndReload();
         }
 
+        // OPTIONAL DELETE HANDLER
         private void btnDelete_Click(object sender, EventArgs e)
         {
-            if (dgvStudents.CurrentRow == null)
+            if (selectedStudentId == 0)
             {
-                MessageBox.Show("Select a student record first.");
+                MessageBox.Show("Select a student first.");
                 return;
             }
 
-            pendingDeleteStudentId =
-                Convert.ToInt32(dgvStudents.CurrentRow.Cells["StudentID"].Value);
+            pendingDeleteStudentId = selectedStudentId;
 
-            MessageBox.Show("Confirm deletion using the Yes, Delete button.");
+            MessageBox.Show(
+                "Click Yes, Delete to confirm deletion.");
         }
 
+        // DELETE SELECTED STUDENT
         private void btnYesDelete_Click(object sender, EventArgs e)
         {
-            if (pendingDeleteStudentId == 0)
+            int studentId = pendingDeleteStudentId != 0
+                ? pendingDeleteStudentId
+                : selectedStudentId;
+
+            if (studentId == 0)
             {
-                MessageBox.Show("Select a student record first.");
+                MessageBox.Show("Select a student first.");
                 return;
             }
 
-            const string sql =
-                "DELETE FROM dbo.Students WHERE StudentID = @StudentID;";
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete this student?",
+                "Delete Student",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                using (SqlCommand command = new SqlCommand(sql, connection))
+                using (SqlConnection connection =
+                    new SqlConnection(connectionString))
+                using (SqlCommand command = new SqlCommand(
+                    "DELETE FROM dbo.Students WHERE StudentID = @ID",
+                    connection))
                 {
-                    command.Parameters.Add("@StudentID", SqlDbType.Int)
-                        .Value = pendingDeleteStudentId;
+                    command.Parameters.Add(
+                        "@ID", SqlDbType.Int).Value = studentId;
 
                     connection.Open();
-                    command.ExecuteNonQuery();
+
+                    int affected = command.ExecuteNonQuery();
+
+                    if (affected == 0)
+                    {
+                        MessageBox.Show("Student was not found.");
+                        return;
+                    }
                 }
 
-                pendingDeleteStudentId = 0;
-                ClearForm();
-                LoadStudents(txtSearchName.Text.Trim(), txtSearchId.Text.Trim());
-                MessageBox.Show("Student deleted.");
+                MessageBox.Show("Student deleted successfully!");
+
+                ClearStudentFields();
+                ResetFiltersAndReload();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Could not delete the student record.\n" + ex.Message);
+                MessageBox.Show(
+                    "Cannot delete student:\n" + ex.Message);
             }
         }
 
+        // CANCEL DELETION
         private void btnNoDelete_Click(object sender, EventArgs e)
         {
             pendingDeleteStudentId = 0;
         }
 
-        private void ClearForm()
+        // CLEAR INPUT FIELDS
+        private void ClearStudentFields()
         {
             selectedStudentId = 0;
+            pendingDeleteStudentId = 0;
+
             txtFullName.Clear();
             cmbGender.SelectedIndex = -1;
+            cmbGender.Text = "";
             dtpDateOfBirth.Value = DateTime.Today;
             txtaddress.Clear();
             txtContactNumber.Clear();
             txtEmailAddress.Clear();
+
             dgvStudents.ClearSelection();
+            dgvStudents.CurrentCell = null;
+        }
+
+        // RELOAD ALL RECORDS
+        private void ResetFiltersAndReload()
+        {
+            changingSearch = true;
+
+            txtSearchName.Clear();
+            txtSearchId.Clear();
+
+            changingSearch = false;
+
+            LoadStudents();
         }
     }
 }
