@@ -173,11 +173,11 @@
       <DependentUpon>DataBase Module UI.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConnection.cs" />
-    <Compile Include="Enrollment Module.cs">
+    <Compile Include="EnrollmentModuleUI.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Enrollment Module.Designer.cs">
-      <DependentUpon>Enrollment Module.cs</DependentUpon>
+    <Compile Include="EnrollmentModuleUI.Designer.cs">
+      <DependentUpon>EnrollmentModuleUI.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginUI.cs">
       <SubType>Form</SubType>
@@ -200,8 +200,8 @@
     <EmbeddedResource Include="DataBase Module UI.resx">
       <DependentUpon>DataBase Module UI.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Enrollment Module.resx">
-      <DependentUpon>Enrollment Module.cs</DependentUpon>
+    <EmbeddedResource Include="EnrollmentModuleUI.resx">
+      <DependentUpon>EnrollmentModuleUI.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginUI.resx">
       <DependentUpon>LoginUI.cs</DependentUpon>
