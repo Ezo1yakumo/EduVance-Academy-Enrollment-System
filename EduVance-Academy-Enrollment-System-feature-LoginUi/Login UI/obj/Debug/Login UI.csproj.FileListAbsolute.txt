@@ -1,0 +1,12 @@
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login UI.csproj.AssemblyReference.cache
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login_UI.DataBase_Module_UI.resources
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login_UI.LoginForm.resources
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login_UI.Properties.Resources.resources
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login_UI.StudentModuleUI.resources
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login UI.csproj.GenerateResource.cache
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login UI.csproj.CoreCompileInputs.cache
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\bin\Debug\Login UI.exe.config
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\bin\Debug\Login UI.exe
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\bin\Debug\Login UI.pdb
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login UI.exe
+C:\Users\abede\source\repos\New folder (3)\EduVance-Academy-Enrollment-System-feature-LoginUi\Login UI\obj\Debug\Login UI.pdb
