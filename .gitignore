@@ -1,7 +1,25 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
 
-/.vs
-/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/.vs
-/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/bin/Debug
+# Visual Studio temporary files
+.vs/
+**/.vs/
+
+# Build output
+**/bin/
+**/obj/
+[Dd]ebug/
+[Rr]elease/
+
+# NuGet packages
+packages/
+
+# User settings
+*.user
+*.suo
+
+# Temporary files
+*.tmp
+*.log
+
+# Local SQL Server database
+*.mdf
+*.ldf
