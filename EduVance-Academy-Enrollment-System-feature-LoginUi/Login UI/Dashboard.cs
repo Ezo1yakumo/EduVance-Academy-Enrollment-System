@@ -12,23 +12,23 @@ namespace Login_UI
         private Timer refreshTimer = new Timer();
         private MdiClient mdiArea;
 
-
         public Dashboard()
         {
             InitializeComponent();
 
-            // Maximize Dashboard when running
+            // Maximize Dashboard
             this.WindowState = FormWindowState.Maximized;
 
-            // Enable MDI
+            // Setup MDI system
             SetupMdi();
 
-            // Refresh SQL information every 5 seconds
+            // Dashboard database refresh every 5 seconds
             refreshTimer.Interval = 5000;
             refreshTimer.Tick += (s, e) => RefreshDashboard();
 
             this.Shown += (s, e) =>
             {
+                ResizeMdiArea();
                 RefreshDashboard();
                 refreshTimer.Start();
             };
@@ -39,16 +39,18 @@ namespace Login_UI
                 refreshTimer.Dispose();
             };
 
-            // Dashboard records table
+            // Configure Dashboard DataGridView
             dgvEnrollmentOverview.ReadOnly = true;
             dgvEnrollmentOverview.AllowUserToAddRows = false;
             dgvEnrollmentOverview.AllowUserToDeleteRows = false;
-
             dgvEnrollmentOverview.AutoGenerateColumns = true;
             dgvEnrollmentOverview.Columns.Clear();
 
             dgvEnrollmentOverview.AutoSizeColumnsMode =
                 DataGridViewAutoSizeColumnsMode.Fill;
+
+            dgvEnrollmentOverview.SelectionMode =
+                DataGridViewSelectionMode.FullRowSelect;
         }
 
         // ====================================
@@ -71,22 +73,22 @@ namespace Login_UI
             if (mdiArea != null)
             {
                 mdiArea.Dock = DockStyle.None;
-                mdiArea.Anchor =
-                    AnchorStyles.Top |
-                    AnchorStyles.Bottom |
-                    AnchorStyles.Left |
-                    AnchorStyles.Right;
+                mdiArea.Anchor = AnchorStyles.None;
+                mdiArea.BackColor = Color.WhiteSmoke;
 
                 ResizeMdiArea();
 
-                mdiArea.BackColor = Color.WhiteSmoke;
-
-                // Dashboard home is visible initially
+                // Hide MDI while Dashboard is open
                 mdiArea.Visible = false;
             }
 
-            this.Resize += (s, e) => ResizeMdiArea();
+            // Adjust MDI when Dashboard changes size
+            this.Resize += (s, e) =>
+            {
+                ResizeMdiArea();
+            };
 
+            // Return to Dashboard when no child is open
             this.MdiChildActivate += (s, e) =>
             {
                 if (this.MdiChildren.Length == 0)
@@ -94,24 +96,38 @@ namespace Login_UI
                     if (mdiArea != null)
                         mdiArea.Visible = false;
 
-                    RefreshDashboard();
+                    pnlDashboardHome.Visible = true;
                 }
             };
         }
+
+        // ====================================
+        // RESPONSIVE MDI AREA
+        // ====================================
+
         private void ResizeMdiArea()
         {
             if (mdiArea == null)
                 return;
 
-            // Keep the blue sidebar visible
-            int sidebarWidth = 116;
+            // Get actual sidebar position and width
+            int sidebarRight =
+                layoutRoot.Left + pnlSidebar.Right;
 
-            // Fill the entire space beside the sidebar
+            int top = layoutRoot.Top;
+
+            // Available content area
+            int contentWidth =
+                Math.Max(1, this.ClientSize.Width - sidebarRight);
+
+            int contentHeight =
+                Math.Max(1, this.ClientSize.Height - top);
+
             mdiArea.SetBounds(
-                sidebarWidth,
-                0,
-                this.ClientSize.Width - sidebarWidth,
-                this.ClientSize.Height
+                sidebarRight,
+                top,
+                contentWidth,
+                contentHeight
             );
 
             mdiArea.BackColor = Color.WhiteSmoke;
@@ -124,18 +140,26 @@ namespace Login_UI
         private void OpenChildForm<T>()
             where T : Form, new()
         {
-            // If the requested form is already open,
-            // activate it instead of opening another.
+            // Check if requested child is already open
             foreach (Form openForm in this.MdiChildren)
             {
                 if (openForm is T)
                 {
+                    pnlDashboardHome.Visible = false;
+
+                    if (mdiArea != null)
+                    {
+                        ResizeMdiArea();
+                        mdiArea.Visible = true;
+                        mdiArea.BringToFront();
+                    }
+
                     openForm.Activate();
                     return;
                 }
             }
 
-            // Close the previously opened module
+            // Close previously opened modules
             Form[] openForms = this.MdiChildren;
 
             foreach (Form openForm in openForms)
@@ -143,7 +167,18 @@ namespace Login_UI
                 openForm.Close();
             }
 
-            // Open the new module
+            // Hide Dashboard content
+            pnlDashboardHome.Visible = false;
+
+            // Show MDI content area
+            if (mdiArea != null)
+            {
+                ResizeMdiArea();
+                mdiArea.Visible = true;
+                mdiArea.BringToFront();
+            }
+
+            // Create child form
             T child = new T();
 
             PrepareChildLayout(child);
@@ -151,27 +186,27 @@ namespace Login_UI
             child.MdiParent = this;
             child.FormBorderStyle = FormBorderStyle.None;
             child.WindowState = FormWindowState.Maximized;
+
+            // Show child only once
             child.Show();
 
-            if (mdiArea != null)
-            {
-                mdiArea.Visible = true;
-                mdiArea.BringToFront();
-            }
+            // Make sure it fills the content area
+            ResizeMdiArea();
 
-            child.WindowState = FormWindowState.Maximized;
-            child.Show();
+            child.Activate();
         }
 
-        // Adjust child layout for the MDI content area
+        // ====================================
+        // PREPARE CHILD FORM LAYOUT
+        // ====================================
+
         private void PrepareChildLayout(Form child)
         {
-            int originalWidth = child.ClientSize.Width;
-            int originalHeight = child.ClientSize.Height;
-            int sidebarWidth = 0;
+            // Allow scrolling if child controls need space
+            child.AutoScroll = true;
+            child.AutoScrollMinSize = Size.Empty;
 
-            // Enrollment form already has its own sidebar.
-            // Hide it because Dashboard has a sidebar.
+            // Look for the child's old sidebar
             Control[] sidebars =
                 child.Controls.Find("panelSidebar", false);
 
@@ -179,33 +214,31 @@ namespace Login_UI
             {
                 Control sidebar = sidebars[0];
 
-                sidebarWidth = sidebar.Width;
+                int sidebarWidth = sidebar.Width;
+
+                // Hide duplicate sidebar
                 sidebar.Visible = false;
 
+                // Move other controls to the left
                 foreach (Control control in child.Controls)
                 {
-                    if (control != sidebar)
+                    if (control != sidebar &&
+                        control.Dock == DockStyle.None &&
+                        control.Left >= sidebarWidth)
                     {
                         control.Left -= sidebarWidth;
                     }
                 }
             }
-
-            // Enable scrolling for larger child forms
-            child.AutoScroll = true;
-
-            child.AutoScrollMinSize = new Size(
-                Math.Max(650, originalWidth - sidebarWidth),
-                Math.Max(420, originalHeight)
-            );
         }
 
         // ====================================
-        // DASHBOARD HOME
+        // SHOW DASHBOARD HOME
         // ====================================
 
         private void ShowDashboardHome()
         {
+            // Close all MDI child forms
             Form[] openForms = this.MdiChildren;
 
             foreach (Form form in openForms)
@@ -213,13 +246,24 @@ namespace Login_UI
                 form.Close();
             }
 
+            // Hide MDI area
             if (mdiArea != null)
+            {
                 mdiArea.Visible = false;
+            }
 
+            // Show responsive Dashboard content
+            pnlDashboardHome.Visible = true;
+            pnlDashboardHome.BringToFront();
+
+            // Refresh information
             RefreshDashboard();
         }
 
-        // Connect to the Dashboard navigation button
+        // ====================================
+        // DASHBOARD BUTTON
+        // ====================================
+
         private void button1_Click(object sender, EventArgs e)
         {
             ShowDashboardHome();
@@ -253,7 +297,7 @@ namespace Login_UI
         }
 
         // ====================================
-        // OTHER NAVIGATION BUTTONS
+        // ASSESSMENT BUTTON
         // ====================================
 
         private void button4_Click(object sender, EventArgs e)
@@ -262,11 +306,19 @@ namespace Login_UI
                 "Assessment module is not connected yet.");
         }
 
+        // ====================================
+        // PAYMENTS BUTTON
+        // ====================================
+
         private void button5_Click(object sender, EventArgs e)
         {
             MessageBox.Show(
                 "Payments module is not connected yet.");
         }
+
+        // ====================================
+        // REPORTS BUTTON
+        // ====================================
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -275,7 +327,7 @@ namespace Login_UI
         }
 
         // ====================================
-        // DATABASE DASHBOARD REFRESH
+        // REFRESH DASHBOARD DATABASE
         // ====================================
 
         private void RefreshDashboard()
@@ -288,7 +340,9 @@ namespace Login_UI
                 {
                     connection.Open();
 
-                    // Dashboard counters
+                    // GET TOTAL STUDENTS, ENROLLMENTS,
+                    // AND ACTIVE SECTIONS
+
                     string sql = @"
                         SELECT
                             (SELECT COUNT(*)
@@ -322,7 +376,8 @@ namespace Login_UI
                         }
                     }
 
-                    // Display saved student information
+                    // LOAD SAVED STUDENT RECORDS
+
                     string studentSql = @"
                         SELECT
                             StudentID AS [Student ID],
@@ -339,9 +394,11 @@ namespace Login_UI
                         new SqlDataAdapter(studentSql, connection))
                     {
                         DataTable table = new DataTable();
+
                         adapter.Fill(table);
 
                         dgvEnrollmentOverview.DataSource = table;
+
                         dgvEnrollmentOverview.ClearSelection();
                     }
                 }
@@ -355,9 +412,13 @@ namespace Login_UI
             }
         }
 
-        // Keep existing DataGridView event
+        // ====================================
+        // DATAGRIDVIEW EVENT
+        // ====================================
+
         private void dgvEnrollmentOverview_CellContentClick(
-            object sender, DataGridViewCellEventArgs e)
+            object sender,
+            DataGridViewCellEventArgs e)
         {
 
         }

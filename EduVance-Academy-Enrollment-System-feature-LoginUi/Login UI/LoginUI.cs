@@ -2,6 +2,11 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Linq;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Windows.Forms;
 
 namespace Login_UI
 {
@@ -11,13 +16,18 @@ namespace Login_UI
         {
             InitializeComponent();
 
+            // Maximize the form
+            this.WindowState = FormWindowState.Maximized;
+            this.StartPosition = FormStartPosition.CenterScreen;
+
             // Hide password characters
             txtpassword.UseSystemPasswordChar = true;
 
-            // Connect login button
+            // Connect Login button
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
         }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {

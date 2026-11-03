@@ -332,17 +332,19 @@
             this.btnYesDeactivate.TabIndex = 0;
             this.btnYesDeactivate.Text = "Yes";
             this.btnYesDeactivate.UseVisualStyleBackColor = true;
+            // 
             // DataBase_Module_UI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1350, 729);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label1);
             this.Name = "DataBase_Module_UI";
             this.Text = "DataBase_Module_UI";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvSections)).EndInit();
