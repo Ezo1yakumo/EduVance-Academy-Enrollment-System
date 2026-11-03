@@ -10,8 +10,11 @@ namespace Login_UI
         public LoginForm()
         {
             InitializeComponent();
+
+            // Hide password characters
             txtpassword.UseSystemPasswordChar = true;
 
+            // Connect login button
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
         }
@@ -26,38 +29,45 @@ namespace Login_UI
             string username = txtusername.Text.Trim();
             string password = txtpassword.Text;
 
+            // Check empty fields
             if (username == "" || password == "")
             {
-                MessageBox.Show("Enter both username and password.");
+                MessageBox.Show(
+                    "Please enter your username and password.");
                 return;
             }
-
-            bool isAdmin = chkAdmin.Checked;
-            bool isRegistrar = chkRegistrar.Checked;
-
-            if (isAdmin == isRegistrar)
-            {
-                MessageBox.Show("Select only one role.");
-                return;
-            }
-
-            string role = isAdmin ? "Admin" : "Registrar";
 
             try
             {
                 UserRepository repository = new UserRepository();
 
-                bool validLogin = repository.ValidateCredentials(
-                    username, password, role);
+                // Automatically check account role from SQL
+                bool isAdmin = repository.ValidateCredentials(
+                    username, password, "Admin");
 
-                if (!validLogin)
+                bool isRegistrar = false;
+
+                if (!isAdmin)
                 {
-                    MessageBox.Show("Invalid username, password, or role.");
+                    isRegistrar = repository.ValidateCredentials(
+                        username, password, "Registrar");
+                }
+
+                // Check login credentials
+                if (!isAdmin && !isRegistrar)
+                {
+                    MessageBox.Show(
+                        "Invalid username or password.");
                     return;
                 }
 
-                MessageBox.Show("Login successful!");
+                // Determine account role
+                string role = isAdmin ? "Admin" : "Registrar";
 
+                MessageBox.Show(
+                    "Login successful!\nWelcome, " + role + "!");
+
+                // Open Dashboard
                 Hide();
 
                 using (Dashboard dashboard = new Dashboard())
@@ -70,7 +80,9 @@ namespace Login_UI
             catch (SqlException ex)
             {
                 Show();
-                MessageBox.Show("Database error:\n" + ex.Message);
+
+                MessageBox.Show(
+                    "Database connection error:\n" + ex.Message);
             }
         }
     }
