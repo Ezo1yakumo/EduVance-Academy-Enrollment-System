@@ -302,9 +302,9 @@ namespace Login_UI
 
         private void button4_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Assessment module is not connected yet.");
+            OpenChildForm<AssessmentModuleUI>();
         }
+        
 
         // ====================================
         // PAYMENTS BUTTON
