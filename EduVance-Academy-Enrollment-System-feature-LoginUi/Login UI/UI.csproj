@@ -160,6 +160,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssessmentModuleUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AssessmentModuleUI.Designer.cs">
+      <DependentUpon>AssessmentModuleUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -194,6 +200,9 @@
       <DependentUpon>StudentModuleUI.cs</DependentUpon>
     </Compile>
     <Compile Include="UserRepository.cs" />
+    <EmbeddedResource Include="AssessmentModuleUI.resx">
+      <DependentUpon>AssessmentModuleUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
