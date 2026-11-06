@@ -179,11 +179,15 @@
       <DependentUpon>DataBase Module UI.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConnection.cs" />
+    <Compile Include="EduVanceSession.cs" />
     <Compile Include="EnrollmentModuleUI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EnrollmentModuleUI.Designer.cs">
       <DependentUpon>EnrollmentModuleUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EnrollmentModuleUI.Records.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="LoginUI.cs">
       <SubType>Form</SubType>
@@ -193,6 +197,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchStudentAccountBalanceUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchStudentAccountBalanceUI.Designer.cs">
+      <DependentUpon>SearchStudentAccountBalanceUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="StudentModuleUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -224,6 +234,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="SearchStudentAccountBalanceUI.resx">
+      <DependentUpon>SearchStudentAccountBalanceUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StudentModuleUI.resx">
       <DependentUpon>StudentModuleUI.cs</DependentUpon>
     </EmbeddedResource>

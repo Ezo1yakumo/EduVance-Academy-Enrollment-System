@@ -23,3 +23,8 @@ packages/
 # Local SQL Server database
 *.mdf
 *.ldf
+/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/Form1.cs
+/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/Form1.Designer.cs
+/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/UI.csproj
+/.gitignore
+/EduVance-Academy-Enrollment-System-feature-LoginUi/Login UI/UI.csproj
