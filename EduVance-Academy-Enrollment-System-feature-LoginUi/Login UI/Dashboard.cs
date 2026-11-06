@@ -181,6 +181,19 @@ namespace Login_UI
             // Create child form
             T child = new T();
 
+            if (child is AssessmentModuleUI assessment)
+            {
+                assessment.SetUserContext(
+                    EduVanceSession.Role,
+                    EduVanceSession.StudentId);
+            }
+
+            if (child is SearchStudentAccountBalanceUI balanceModule)
+            {
+                balanceModule.SetUserRole(
+                    EduVanceSession.Role);
+            }
+
             PrepareChildLayout(child);
 
             child.MdiParent = this;
@@ -304,7 +317,7 @@ namespace Login_UI
         {
             OpenChildForm<AssessmentModuleUI>();
         }
-        
+
 
         // ====================================
         // PAYMENTS BUTTON
@@ -312,8 +325,7 @@ namespace Login_UI
 
         private void button5_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Payments module is not connected yet.");
+            OpenChildForm<SearchStudentAccountBalanceUI>();
         }
 
         // ====================================

@@ -186,7 +186,7 @@ namespace Login_UI
 
             // Payments button
             this.button5.Name = "button5";
-            this.button5.Text = "Payments";
+            this.button5.Text = "Student Balance";
             this.button5.Location = new Point(0, 283);
             this.button5.Size = new Size(150, 42);
             this.button5.BackColor = Color.CornflowerBlue;

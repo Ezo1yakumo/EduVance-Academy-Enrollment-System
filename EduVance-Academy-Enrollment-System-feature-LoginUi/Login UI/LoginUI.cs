@@ -5,8 +5,6 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Linq;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Windows.Forms;
 
 namespace Login_UI
 {
@@ -27,7 +25,6 @@ namespace Login_UI
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
         }
-
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -51,10 +48,11 @@ namespace Login_UI
             {
                 UserRepository repository = new UserRepository();
 
-                // Automatically check account role from SQL
+                // Check Admin credentials
                 bool isAdmin = repository.ValidateCredentials(
                     username, password, "Admin");
 
+                // Check Registrar credentials
                 bool isRegistrar = false;
 
                 if (!isAdmin)
@@ -74,8 +72,23 @@ namespace Login_UI
                 // Determine account role
                 string role = isAdmin ? "Admin" : "Registrar";
 
+                // =====================================
+                // SAVE AUTHENTICATED USER SESSION
+                // =====================================
+
+                EduVanceSession.Username = username;
+                EduVanceSession.Role = role;
+                EduVanceSession.StudentId = null;
+
+                // =====================================
+                // LOGIN SUCCESSFUL
+                // =====================================
+
                 MessageBox.Show(
-                    "Login successful!\nWelcome, " + role + "!");
+                    "Login successful!\nWelcome, " + role + "!",
+                    "EduVance Academy",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
 
                 // Open Dashboard
                 Hide();
@@ -84,6 +97,11 @@ namespace Login_UI
                 {
                     dashboard.ShowDialog();
                 }
+
+                // Clear session after Dashboard closes
+                EduVanceSession.Username = "";
+                EduVanceSession.Role = "";
+                EduVanceSession.StudentId = null;
 
                 Close();
             }
