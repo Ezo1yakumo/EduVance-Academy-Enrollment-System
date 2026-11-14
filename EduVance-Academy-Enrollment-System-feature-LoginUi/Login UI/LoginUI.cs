@@ -2,9 +2,6 @@
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Login_UI
 {
@@ -14,14 +11,14 @@ namespace Login_UI
         {
             InitializeComponent();
 
-            // Maximize the form
+            // Maximize login form
             this.WindowState = FormWindowState.Maximized;
             this.StartPosition = FormStartPosition.CenterScreen;
 
             // Hide password characters
             txtpassword.UseSystemPasswordChar = true;
 
-            // Connect Login button
+            // Connect login button
             btnlogin.Click -= btnlogin_Click;
             btnlogin.Click += btnlogin_Click;
         }
@@ -36,7 +33,7 @@ namespace Login_UI
             string username = txtusername.Text.Trim();
             string password = txtpassword.Text;
 
-            // Check empty fields
+            // Validate empty fields
             if (username == "" || password == "")
             {
                 MessageBox.Show(
@@ -48,11 +45,15 @@ namespace Login_UI
             {
                 UserRepository repository = new UserRepository();
 
-                // Check Admin credentials
+                // =====================================
+                // AUTOMATIC ACCOUNT ROLE DETECTION
+                // =====================================
+
+                // Check Admin account
                 bool isAdmin = repository.ValidateCredentials(
                     username, password, "Admin");
 
-                // Check Registrar credentials
+                // Check Registrar account
                 bool isRegistrar = false;
 
                 if (!isAdmin)
@@ -61,16 +62,38 @@ namespace Login_UI
                         username, password, "Registrar");
                 }
 
-                // Check login credentials
+                // Check Cashier account
+                bool isCashier = false;
+
                 if (!isAdmin && !isRegistrar)
                 {
+                    isCashier = repository.ValidateCredentials(
+                        username, password, "Cashier");
+                }
+
+                // =====================================
+                // LOGIN VALIDATION
+                // =====================================
+
+                if (!isAdmin && !isRegistrar && !isCashier)
+                {
                     MessageBox.Show(
-                        "Invalid username or password.");
+                        "Invalid username or password.",
+                        "Login Failed",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Determine account role
-                string role = isAdmin ? "Admin" : "Registrar";
+                // =====================================
+                // DETERMINE USER ROLE
+                // =====================================
+
+                string role = isAdmin
+                    ? "Admin"
+                    : isRegistrar
+                        ? "Registrar"
+                        : "Cashier";
 
                 // =====================================
                 // SAVE AUTHENTICATED USER SESSION
@@ -98,7 +121,7 @@ namespace Login_UI
                     dashboard.ShowDialog();
                 }
 
-                // Clear session after Dashboard closes
+                // Clear session after logout
                 EduVanceSession.Username = "";
                 EduVanceSession.Role = "";
                 EduVanceSession.StudentId = null;
@@ -110,7 +133,10 @@ namespace Login_UI
                 Show();
 
                 MessageBox.Show(
-                    "Database connection error:\n" + ex.Message);
+                    "Database connection error:\n" + ex.Message,
+                    "Database Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
     }

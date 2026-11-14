@@ -179,8 +179,10 @@ namespace Login_UI
             }
 
             // Create child form
+
             T child = new T();
 
+            // Assessment Module
             if (child is AssessmentModuleUI assessment)
             {
                 assessment.SetUserContext(
@@ -188,12 +190,20 @@ namespace Login_UI
                     EduVanceSession.StudentId);
             }
 
+            // Student Balance Module
             if (child is SearchStudentAccountBalanceUI balanceModule)
             {
                 balanceModule.SetUserRole(
                     EduVanceSession.Role);
             }
 
+            // Payment Module
+            if (child is PaymentModuleUI paymentModule)
+            {
+                paymentModule.SetUserContext(
+                    EduVanceSession.Role,
+                    EduVanceSession.Username);
+            }
             PrepareChildLayout(child);
 
             child.MdiParent = this;
@@ -331,6 +341,12 @@ namespace Login_UI
         // ====================================
         // REPORTS BUTTON
         // ====================================
+
+        private void btnPayments_Click(object sender, EventArgs e)
+        {
+            OpenChildForm<PaymentModuleUI>();
+
+        }
 
         private void button6_Click(object sender, EventArgs e)
         {
