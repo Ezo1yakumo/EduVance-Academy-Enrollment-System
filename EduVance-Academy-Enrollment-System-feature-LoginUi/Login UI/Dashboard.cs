@@ -182,6 +182,12 @@ namespace Login_UI
 
             T child = new T();
 
+            if (child is PaymentHistoryReceiptModuleUI historyModule)
+            {
+                historyModule.SetUserContext(
+                    EduVanceSession.Role,
+                    EduVanceSession.Username);
+            }
             // Assessment Module
             if (child is AssessmentModuleUI assessment)
             {
@@ -449,6 +455,11 @@ namespace Login_UI
             DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnPaymentHistory_Click(object sender, EventArgs e)
+        {
+            OpenChildForm<PaymentHistoryReceiptModuleUI>();
         }
     }
 }
