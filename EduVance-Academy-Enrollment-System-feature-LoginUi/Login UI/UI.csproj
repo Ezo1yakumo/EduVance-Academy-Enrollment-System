@@ -209,6 +209,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsModuleUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReportsModuleUI.Designer.cs">
+      <DependentUpon>ReportsModuleUI.cs</DependentUpon>
+    </Compile>
     <Compile Include="SearchStudentAccountBalanceUI.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +255,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ReportsModuleUI.resx">
+      <DependentUpon>ReportsModuleUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SearchStudentAccountBalanceUI.resx">
       <DependentUpon>SearchStudentAccountBalanceUI.cs</DependentUpon>
     </EmbeddedResource>

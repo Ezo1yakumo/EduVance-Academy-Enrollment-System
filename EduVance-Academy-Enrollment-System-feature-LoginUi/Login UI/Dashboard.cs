@@ -353,12 +353,11 @@ namespace Login_UI
             OpenChildForm<PaymentModuleUI>();
 
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(
-                "Reports module is not connected yet.");
+            OpenChildForm<ReportsModuleUI>();
         }
+
 
         // ====================================
         // REFRESH DASHBOARD DATABASE
