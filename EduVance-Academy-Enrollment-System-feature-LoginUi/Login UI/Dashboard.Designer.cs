@@ -22,6 +22,7 @@ namespace Login_UI
         {
             this.layoutRoot = new System.Windows.Forms.TableLayoutPanel();
             this.pnlSidebar = new System.Windows.Forms.Panel();
+            this.btnPayments = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -59,7 +60,8 @@ namespace Login_UI
             this.dgvEnrollmentOverview = new System.Windows.Forms.DataGridView();
             this.Enrolled = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label19 = new System.Windows.Forms.Label();
-            this.btnPayments = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.btnPaymentHistory = new System.Windows.Forms.Button();
             this.layoutRoot.SuspendLayout();
             this.pnlSidebar.SuspendLayout();
             this.pnlDashboardHome.SuspendLayout();
@@ -93,6 +95,8 @@ namespace Login_UI
             // pnlSidebar
             // 
             this.pnlSidebar.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.pnlSidebar.Controls.Add(this.btnPaymentHistory);
+            this.pnlSidebar.Controls.Add(this.button7);
             this.pnlSidebar.Controls.Add(this.btnPayments);
             this.pnlSidebar.Controls.Add(this.label1);
             this.pnlSidebar.Controls.Add(this.label2);
@@ -109,6 +113,23 @@ namespace Login_UI
             this.pnlSidebar.Name = "pnlSidebar";
             this.pnlSidebar.Size = new System.Drawing.Size(150, 768);
             this.pnlSidebar.TabIndex = 0;
+            // 
+            // btnPayments
+            // 
+            this.btnPayments.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPayments.FlatAppearance.BorderSize = 0;
+            this.btnPayments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayments.Font = new System.Drawing.Font("Montserrat", 10F);
+            this.btnPayments.ForeColor = System.Drawing.Color.White;
+            this.btnPayments.Location = new System.Drawing.Point(0, 331);
+            this.btnPayments.Name = "btnPayments";
+            this.btnPayments.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnPayments.Size = new System.Drawing.Size(150, 42);
+            this.btnPayments.TabIndex = 9;
+            this.btnPayments.Text = "Payment";
+            this.btnPayments.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPayments.UseVisualStyleBackColor = false;
+            this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
             // 
             // label1
             // 
@@ -232,7 +253,7 @@ namespace Login_UI
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Font = new System.Drawing.Font("Montserrat", 10F);
             this.button6.ForeColor = System.Drawing.Color.White;
-            this.button6.Location = new System.Drawing.Point(0, 379);
+            this.button6.Location = new System.Drawing.Point(0, 427);
             this.button6.Name = "button6";
             this.button6.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
             this.button6.Size = new System.Drawing.Size(150, 42);
@@ -558,22 +579,38 @@ namespace Login_UI
             this.label19.TabIndex = 1;
             this.label19.Visible = false;
             // 
-            // btnPayments
+            // button7
             // 
-            this.btnPayments.BackColor = System.Drawing.Color.CornflowerBlue;
-            this.btnPayments.FlatAppearance.BorderSize = 0;
-            this.btnPayments.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPayments.Font = new System.Drawing.Font("Montserrat", 10F);
-            this.btnPayments.ForeColor = System.Drawing.Color.White;
-            this.btnPayments.Location = new System.Drawing.Point(0, 331);
-            this.btnPayments.Name = "btnPayments";
-            this.btnPayments.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
-            this.btnPayments.Size = new System.Drawing.Size(150, 42);
-            this.btnPayments.TabIndex = 9;
-            this.btnPayments.Text = "Payment";
-            this.btnPayments.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnPayments.UseVisualStyleBackColor = false;
-            this.btnPayments.Click += new System.EventHandler(this.btnPayments_Click);
+            this.button7.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.button7.FlatAppearance.BorderSize = 0;
+            this.button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button7.Font = new System.Drawing.Font("Montserrat", 10F);
+            this.button7.ForeColor = System.Drawing.Color.White;
+            this.button7.Location = new System.Drawing.Point(0, 365);
+            this.button7.Name = "button7";
+            this.button7.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.button7.Size = new System.Drawing.Size(150, 42);
+            this.button7.TabIndex = 10;
+            this.button7.Text = "Payment";
+            this.button7.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button7.UseVisualStyleBackColor = false;
+            // 
+            // btnPaymentHistory
+            // 
+            this.btnPaymentHistory.BackColor = System.Drawing.Color.CornflowerBlue;
+            this.btnPaymentHistory.FlatAppearance.BorderSize = 0;
+            this.btnPaymentHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPaymentHistory.Font = new System.Drawing.Font("Montserrat", 10F);
+            this.btnPaymentHistory.ForeColor = System.Drawing.Color.White;
+            this.btnPaymentHistory.Location = new System.Drawing.Point(0, 379);
+            this.btnPaymentHistory.Name = "btnPaymentHistory";
+            this.btnPaymentHistory.Padding = new System.Windows.Forms.Padding(10, 0, 0, 0);
+            this.btnPaymentHistory.Size = new System.Drawing.Size(150, 42);
+            this.btnPaymentHistory.TabIndex = 10;
+            this.btnPaymentHistory.Text = "Payment History";
+            this.btnPaymentHistory.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnPaymentHistory.UseVisualStyleBackColor = false;
+            this.btnPaymentHistory.Click += new System.EventHandler(this.btnPaymentHistory_Click);
             // 
             // Dashboard
             // 
@@ -652,5 +689,7 @@ namespace Login_UI
         private DataGridView dgvEnrollmentOverview;
         private DataGridViewTextBoxColumn Enrolled;
         private Button btnPayments;
+        private Button btnPaymentHistory;
+        private Button button7;
     }
 }
