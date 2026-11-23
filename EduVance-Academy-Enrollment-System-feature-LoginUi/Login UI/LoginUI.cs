@@ -1,7 +1,8 @@
-﻿
 using System;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using EduVance.BusinessLogic.Controller;
+using EduVance.Models;
 
 namespace Login_UI
 {
@@ -43,39 +44,11 @@ namespace Login_UI
 
             try
             {
-                UserRepository repository = new UserRepository();
+                UserController controller =
+                    new UserController(DatabaseConnection.ConnectionString);
+                AuthenticatedUser user = controller.Login(username, password);
 
-                // =====================================
-                // AUTOMATIC ACCOUNT ROLE DETECTION
-                // =====================================
-
-                // Check Admin account
-                bool isAdmin = repository.ValidateCredentials(
-                    username, password, "Admin");
-
-                // Check Registrar account
-                bool isRegistrar = false;
-
-                if (!isAdmin)
-                {
-                    isRegistrar = repository.ValidateCredentials(
-                        username, password, "Registrar");
-                }
-
-                // Check Cashier account
-                bool isCashier = false;
-
-                if (!isAdmin && !isRegistrar)
-                {
-                    isCashier = repository.ValidateCredentials(
-                        username, password, "Cashier");
-                }
-
-                // =====================================
-                // LOGIN VALIDATION
-                // =====================================
-
-                if (!isAdmin && !isRegistrar && !isCashier)
+                if (user == null)
                 {
                     MessageBox.Show(
                         "Invalid username or password.",
@@ -85,21 +58,13 @@ namespace Login_UI
                     return;
                 }
 
-                // =====================================
-                // DETERMINE USER ROLE
-                // =====================================
-
-                string role = isAdmin
-                    ? "Admin"
-                    : isRegistrar
-                        ? "Registrar"
-                        : "Cashier";
+                string role = user.Role;
 
                 // =====================================
                 // SAVE AUTHENTICATED USER SESSION
                 // =====================================
 
-                EduVanceSession.Username = username;
+                EduVanceSession.Username = user.Username;
                 EduVanceSession.Role = role;
                 EduVanceSession.StudentId = null;
 
