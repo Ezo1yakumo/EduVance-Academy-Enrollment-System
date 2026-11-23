@@ -1,15 +1,15 @@
-﻿
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using EduVance.BusinessLogic.Controller;
+using EduVance.Models;
 using System.Windows.Forms;
 
 namespace Login_UI
 {
     public partial class StudentModuleUI : Form
     {
-        private readonly string connectionString =
-            DatabaseConnection.ConnectionString;
+        private readonly StudentController studentController =
+            new StudentController(DatabaseConnection.ConnectionString);
 
         private int selectedStudentId = 0;
         private int pendingDeleteStudentId = 0;
@@ -76,53 +76,22 @@ namespace Login_UI
             LoadStudents();
         }
 
-        // LOAD STUDENTS FROM DATABASE
-        private void LoadStudents(
-            string nameFilter = "", string idFilter = "")
+        // The UI delegates data access to StudentController -> StudentRepository.
+        private void LoadStudents(string nameFilter = "", string idFilter = "")
         {
-            string sql = @"
-                SELECT StudentID, FullName, Gender,
-                       DateOfBirth, Address,
-                       ContactNumber, EmailAddress
-                FROM dbo.Students
-                WHERE (@Name = ''
-                    OR FullName LIKE '%' + @Name + '%')
-                  AND (@ID = ''
-                    OR CONVERT(NVARCHAR(20), StudentID) = @ID)
-                ORDER BY StudentID DESC";
-
             try
             {
                 loadingStudents = true;
-
-                using (SqlConnection connection =
-                    new SqlConnection(connectionString))
-                using (SqlDataAdapter adapter =
-                    new SqlDataAdapter(sql, connection))
-                {
-                    adapter.SelectCommand.Parameters.Add(
-                        "@Name", SqlDbType.NVarChar, 150)
-                        .Value = nameFilter;
-
-                    adapter.SelectCommand.Parameters.Add(
-                        "@ID", SqlDbType.NVarChar, 20)
-                        .Value = idFilter;
-
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
-
-                    dgvStudents.DataSource = table;
-                    dgvStudents.ClearSelection();
-                    dgvStudents.CurrentCell = null;
-
-                    selectedStudentId = 0;
-                    pendingDeleteStudentId = 0;
-                }
+                DataTable table = studentController.SearchStudents(nameFilter, idFilter);
+                dgvStudents.DataSource = table;
+                dgvStudents.ClearSelection();
+                dgvStudents.CurrentCell = null;
+                selectedStudentId = 0;
+                pendingDeleteStudentId = 0;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error loading students:\n" + ex.Message);
+                MessageBox.Show("Error loading students:\n" + ex.Message);
             }
             finally
             {
@@ -130,99 +99,30 @@ namespace Login_UI
             }
         }
 
-        // SAVE OR UPDATE STUDENT
         private void btnSave_Click(object sender, EventArgs e)
         {
-            string fullName = txtFullName.Text.Trim();
-            string gender = cmbGender.Text.Trim();
-            string address = txtaddress.Text.Trim();
-            string contact = txtContactNumber.Text.Trim();
-            string email = txtEmailAddress.Text.Trim();
-
-            if (fullName == "" || gender == "" ||
-                address == "" || contact == "" || email == "")
-            {
-                MessageBox.Show("Please complete all fields.");
-                return;
-            }
-
             bool addingNew = selectedStudentId == 0;
-            string sql;
-
-            if (addingNew)
+            StudentRecord student = new StudentRecord
             {
-                sql = @"
-                    INSERT INTO dbo.Students
-                    (FullName, Gender, DateOfBirth,
-                     Address, ContactNumber, EmailAddress)
-                    VALUES
-                    (@FullName, @Gender, @DateOfBirth,
-                     @Address, @ContactNumber, @EmailAddress)";
-            }
-            else
-            {
-                sql = @"
-                    UPDATE dbo.Students
-                    SET FullName = @FullName,
-                        Gender = @Gender,
-                        DateOfBirth = @DateOfBirth,
-                        Address = @Address,
-                        ContactNumber = @ContactNumber,
-                        EmailAddress = @EmailAddress
-                    WHERE StudentID = @StudentID";
-            }
+                StudentID = selectedStudentId,
+                FullName = txtFullName.Text,
+                Gender = cmbGender.Text,
+                DateOfBirth = dtpDateOfBirth.Value.Date,
+                Address = txtaddress.Text,
+                ContactNumber = txtContactNumber.Text,
+                EmailAddress = txtEmailAddress.Text
+            };
 
             try
             {
-                using (SqlConnection connection =
-                    new SqlConnection(connectionString))
-                using (SqlCommand command =
-                    new SqlCommand(sql, connection))
+                int affected = studentController.SaveStudent(student);
+                if (affected == 0)
                 {
-                    command.Parameters.Add(
-                        "@FullName", SqlDbType.NVarChar, 150)
-                        .Value = fullName;
-
-                    command.Parameters.Add(
-                        "@Gender", SqlDbType.NVarChar, 20)
-                        .Value = gender;
-
-                    command.Parameters.Add(
-                        "@DateOfBirth", SqlDbType.Date)
-                        .Value = dtpDateOfBirth.Value.Date;
-
-                    command.Parameters.Add(
-                        "@Address", SqlDbType.NVarChar, 300)
-                        .Value = address;
-
-                    command.Parameters.Add(
-                        "@ContactNumber", SqlDbType.NVarChar, 30)
-                        .Value = contact;
-
-                    command.Parameters.Add(
-                        "@EmailAddress", SqlDbType.NVarChar, 150)
-                        .Value = email;
-
-                    if (!addingNew)
-                    {
-                        command.Parameters.Add(
-                            "@StudentID", SqlDbType.Int)
-                            .Value = selectedStudentId;
-                    }
-
-                    connection.Open();
-
-                    int affected = command.ExecuteNonQuery();
-
-                    if (affected == 0)
-                    {
-                        MessageBox.Show("No student record was changed.");
-                        return;
-                    }
+                    MessageBox.Show("No student record was changed.");
+                    return;
                 }
 
-                MessageBox.Show(
-                    addingNew
+                MessageBox.Show(addingNew
                     ? "Student saved successfully!"
                     : "Student updated successfully!");
 
@@ -231,8 +131,7 @@ namespace Login_UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show(
-                    "Error saving student:\n" + ex.Message);
+                MessageBox.Show("Error saving student:\n" + ex.Message);
             }
         }
 
@@ -364,24 +263,11 @@ namespace Login_UI
 
             try
             {
-                using (SqlConnection connection =
-                    new SqlConnection(connectionString))
-                using (SqlCommand command = new SqlCommand(
-                    "DELETE FROM dbo.Students WHERE StudentID = @ID",
-                    connection))
+                int affected = studentController.DeleteStudent(studentId);
+                if (affected == 0)
                 {
-                    command.Parameters.Add(
-                        "@ID", SqlDbType.Int).Value = studentId;
-
-                    connection.Open();
-
-                    int affected = command.ExecuteNonQuery();
-
-                    if (affected == 0)
-                    {
-                        MessageBox.Show("Student was not found.");
-                        return;
-                    }
+                    MessageBox.Show("Student was not found.");
+                    return;
                 }
 
                 MessageBox.Show("Student deleted successfully!");
