@@ -79,20 +79,39 @@ namespace Login_UI
                     MessageBoxIcon.Information);
 
                 // Open Dashboard
+
                 Hide();
+
+                DialogResult dashboardResult;
 
                 using (Dashboard dashboard = new Dashboard())
                 {
-                    dashboard.ShowDialog();
+                    dashboardResult = dashboard.ShowDialog();
                 }
 
-                // Clear session after logout
+                // Clear the previous user's session
                 EduVanceSession.Username = "";
                 EduVanceSession.Role = "";
                 EduVanceSession.StudentId = null;
 
-                Close();
+                // Clear the previous login credentials
+                txtusername.Clear();
+                txtpassword.Clear();
+
+                if (dashboardResult == DialogResult.Retry)
+                {
+                    // Return to login without exiting the application
+                    Show();
+                    Activate();
+                    txtusername.Focus();
+                }
+                else
+                {
+                    // Exit when the Dashboard is closed normally
+                    Close();
+                }
             }
+
             catch (SqlException ex)
             {
                 Show();

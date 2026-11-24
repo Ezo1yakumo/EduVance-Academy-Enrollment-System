@@ -16,6 +16,8 @@ namespace Login_UI
         {
             InitializeComponent();
 
+            CreateLogoutButton();
+
             // Maximize Dashboard
             this.WindowState = FormWindowState.Maximized;
 
@@ -52,6 +54,47 @@ namespace Login_UI
             dgvEnrollmentOverview.SelectionMode =
                 DataGridViewSelectionMode.FullRowSelect;
         }
+
+
+        private void CreateLogoutButton()
+        {
+            Button btnLogout = new Button();
+
+            btnLogout.Name = "btnLogout";
+            btnLogout.Text = "Logout";
+            btnLogout.Height = 45;
+            btnLogout.Dock = DockStyle.Bottom;
+            btnLogout.BackColor = Color.FromArgb(45, 95, 180);
+            btnLogout.ForeColor = Color.White;
+            btnLogout.Font = new Font(
+                "Segoe UI", 10F, FontStyle.Bold);
+
+            btnLogout.FlatStyle = FlatStyle.Flat;
+            btnLogout.FlatAppearance.BorderSize = 0;
+            btnLogout.Cursor = Cursors.Hand;
+
+            btnLogout.Click += BtnLogout_Click;
+
+            pnlSidebar.Controls.Add(btnLogout);
+            btnLogout.BringToFront();
+        }
+
+        private void BtnLogout_Click(object sender, EventArgs e)
+        {
+            DialogResult confirm = MessageBox.Show(
+                "Are you sure you want to log out?\n\n" +
+                "Unsaved changes may be lost.",
+                "EduVance Academy - Logout",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+
+            if (confirm != DialogResult.Yes)
+                return;
+
+            this.DialogResult = DialogResult.Retry;
+            this.Close();
+        }
+
 
         // ====================================
         // SETUP MDI PARENT
