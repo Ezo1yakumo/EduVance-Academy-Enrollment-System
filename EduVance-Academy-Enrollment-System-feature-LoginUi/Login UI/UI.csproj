@@ -179,6 +179,7 @@
       <DependentUpon>DataBase Module UI.cs</DependentUpon>
     </Compile>
     <Compile Include="DatabaseConnection.cs" />
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="EduVanceSession.cs" />
     <Compile Include="EnrollmentModuleUI.cs">
       <SubType>Form</SubType>
@@ -290,5 +291,15 @@
   <ItemGroup>
     <ProjectReference Include="..\BusinessLogic\BusinessLogic.csproj" />
     <ProjectReference Include="..\Model\Model.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\DB\01_Schema.sql">
+      <Link>DB\01_Schema.sql</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\DB\02_SeedData.sql">
+      <Link>DB\02_SeedData.sql</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 </Project>
