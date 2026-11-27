@@ -1,0 +1,9 @@
+
+USE master;
+GO
+
+IF DB_ID(N'EduVance') IS NULL
+BEGIN
+    CREATE DATABASE EduVance;
+END;
+GO
